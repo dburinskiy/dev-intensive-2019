@@ -9,10 +9,9 @@ const val MINUTE = 60 * SECONDS
 const val HOUR = 60 * MINUTE
 const val DAY = 60 * HOUR
 
-fun Date.format(pattern: String = "HH:mm:ss dd.MM.yy"): String {
-    val dateFormat = SimpleDateFormat(pattern, Locale("ru"))
-    return dateFormat.format(this)
-}
+fun Date.format(pattern: String = "HH:mm:ss dd.MM.yy"): String = SimpleDateFormat(pattern, Locale("ru")).
+    format(this)
+
 
 fun Date.add(value: Int, units: String): Date {
     var time = this.time
