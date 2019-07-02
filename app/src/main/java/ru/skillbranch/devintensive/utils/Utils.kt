@@ -3,9 +3,7 @@ package ru.skillbranch.devintensive.utils
 object Utils {
 
     fun parseFullName(fullName: String?): Pair<String?, String?> {
-        //todo Fix Me!!!! Null or Empty value
-
-        val parts: List<String>? = fullName?.split(" ")
+        val parts: List<String>? = fullName?.trimIndent()?.ifEmpty { null }?.split(" ")
 
         var firstName = parts?.getOrNull(0)
         var lastName = parts?.getOrNull(1)
