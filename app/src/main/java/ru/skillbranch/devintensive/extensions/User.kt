@@ -20,8 +20,3 @@ fun User.toUserView(): UserView {
         initials = initials
     )
 }
-
-private fun Date.humanizeDiff(date: Date = Date()): String {
-    //todo
-    return ""
-}
