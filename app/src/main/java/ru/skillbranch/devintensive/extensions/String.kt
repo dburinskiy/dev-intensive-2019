@@ -6,3 +6,5 @@ fun String.truncate(value: Int = 16): String {
 
     return if (result.length < 3) result else "${result.substring(0, value).trim()}..."
 }
+
+fun String.stripHtml(): String = this.replace("\\<[^>]*>".toRegex(), "").replace("( )+".toRegex(), " ")
