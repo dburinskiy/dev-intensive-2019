@@ -24,28 +24,19 @@ fun Date.humanizeDiff(date: Date = Date()): String {
         in 45..75 -> agoOrFutureSuffix(ago, "минуту")
 
         in 75..TimeUnit.MINUTES.toSeconds(45) -> agoOrFutureSuffix(
-            ago, pluralRuForms(
-                TimeUnit.SECONDS.toMinutes(seconds).toInt(),
-                arrayOf("минуту", "минуты", "минут")
-            )
+            ago, TimeUnits.MINUTE.plural(TimeUnit.SECONDS.toMinutes(seconds).toInt())
         )
 
         in TimeUnit.MINUTES.toSeconds(45)..TimeUnit.MINUTES.toSeconds(75) -> agoOrFutureSuffix(ago, "час")
 
         in TimeUnit.MINUTES.toSeconds(75)..TimeUnit.HOURS.toSeconds(22) -> agoOrFutureSuffix(
-            ago, pluralRuForms(
-                TimeUnit.SECONDS.toHours(seconds).toInt(),
-                arrayOf("час", "часа", "часов")
-            )
+            ago, TimeUnits.HOUR.plural(TimeUnit.SECONDS.toHours(seconds).toInt())
         )
 
         in TimeUnit.HOURS.toSeconds(22)..TimeUnit.HOURS.toSeconds(26) -> agoOrFutureSuffix(ago, "день")
 
         in TimeUnit.HOURS.toSeconds(26)..TimeUnit.DAYS.toSeconds(360) -> agoOrFutureSuffix(
-            ago, pluralRuForms(
-                TimeUnit.SECONDS.toDays(seconds).toInt(),
-                arrayOf("день", "дня", "дней")
-            )
+            ago, TimeUnits.DAY.plural(TimeUnit.SECONDS.toDays(seconds).toInt())
         )
         else -> if (ago) "более года назад" else "более чем через год"
     }
@@ -54,18 +45,22 @@ fun Date.humanizeDiff(date: Date = Date()): String {
 
 private fun agoOrFutureSuffix(ago: Boolean, text: String): String = if (ago) "${text} назад" else "через ${text}"
 
-//http://docs.translatehouse.org/projects/localization-guide/en/latest/l10n/pluralforms.html?id=l10n/pluralforms
-private fun pluralRuForms(n: Int, titles: Array<String>): String {
-    val i =
-        if (n % 10 == 1 && n % 100 != 11) 0
+enum class TimeUnits(val milliseconds: Long, val titles: Array<String>) {
+
+    SECOND(1000L, arrayOf("секунду", "секунды", "секунд")),
+    MINUTE(SECOND.milliseconds * 60, arrayOf("минуту", "минуты", "минут")),
+    HOUR(MINUTE.milliseconds * 60, arrayOf("час", "часа", "часов")),
+    DAY(HOUR.milliseconds * 24, arrayOf("день", "дня", "дней"));
+
+    //http://docs.translatehouse.org/projects/localization-guide/en/latest/l10n/pluralforms.html?id=l10n/pluralforms
+    fun plural(value: Int): String {
+        val titlesIndex = titlesIndex(value)
+        return "$value ${this.titles[titlesIndex]}"
+    }
+
+    private fun titlesIndex(n: Int): Int {
+        return if (n % 10 == 1 && n % 100 != 11) 0
         else if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) 1
         else 2
-    return "${n} ${titles[i]}"
-}
-
-enum class TimeUnits(val milliseconds: Long) {
-    SECOND(1000L),
-    MINUTE(SECOND.milliseconds * 60),
-    HOUR(MINUTE.milliseconds * 60),
-    DAY(HOUR.milliseconds * 24)
+    }
 }
