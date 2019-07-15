@@ -1,5 +1,6 @@
 package ru.skillbranch.devintensive.models
 
+import ru.skillbranch.devintensive.extensions.isAnyDigits
 import ru.skillbranch.devintensive.extensions.isDigitsOnly
 
 
@@ -109,7 +110,7 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
         ) {
             override fun nextQuestion(): Question = BDAY
             override fun validate(answer: String): Pair<Boolean, String> {
-                if (!answer.isDigitsOnly()) {
+                if (answer.isAnyDigits()) {
                     return true to ""
                 }
 

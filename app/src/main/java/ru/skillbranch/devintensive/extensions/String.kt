@@ -19,3 +19,13 @@ fun String.isDigitsOnly(): Boolean {
     }
     return true
 }
+
+fun String.isAnyDigits(): Boolean {
+    val len = this.length
+    for (i in 0 until len) {
+        if (Character.isDigit(this[i])) {
+            return false
+        }
+    }
+    return true
+}
