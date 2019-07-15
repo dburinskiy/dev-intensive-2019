@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import ru.skillbranch.devintensive.models.Bender
 import androidx.core.content.ContextCompat.getSystemService
 import android.view.inputmethod.EditorInfo
+import ru.skillbranch.devintensive.extensions.hideKeyboard
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
@@ -116,7 +117,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     fun sendMessageToBender() {
-        val (phrase, color) = benderObj.listenAnswer(messageEt.text.toString().toLowerCase())
+        val (phrase, color) = benderObj.listenAnswer(messageEt.text.toString())
         messageEt.setText("")
         val (r, g, b) = color
         benderImage.setColorFilter(Color.rgb(r, g, b), PorterDuff.Mode.MULTIPLY)
@@ -124,13 +125,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
-    fun Activity.hideKeyboard() {
-        val view = this.currentFocus
-        view?.let { v ->
-            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-            imm?.let { it.hideSoftInputFromWindow(v.windowToken, 0) }
-        }
-    }
 
 //    override fun onEditorAction(view: TextView?, actionId: Int, p2: KeyEvent?): Boolean {
 //        Log.d("M_onEditorAction", ": $actionId")
