@@ -23,7 +23,7 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
         var validation = question.validate(answer)
         if (validation.first) {
 
-            return if (question.answers.contains(answer)) {
+            return if (answer.isNotEmpty() && question.answers.contains(answer)) {
 
                 question = question.nextQuestion()
                 "Отлично - ты справился\n${question.question}" to status.color
@@ -80,7 +80,7 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
         NAME("Как меня зовут?", listOf("бендер", "bender", "Bender"), "Имя должно начинаться с заглавной буквы") {
             override fun nextQuestion(): Question = PROFESSION
             override fun validate(answer: String): Pair<Boolean, String> {
-                if (answer.trimIndent().take(1).toCharArray()[0].isUpperCase()) {
+                if (answer.isNotEmpty() && answer.trimIndent().take(1).toCharArray()[0].isUpperCase()) {
                     return true to ""
                 }
 
@@ -96,7 +96,7 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
             override fun nextQuestion(): Question = MATERIAL
 
             override fun validate(answer: String): Pair<Boolean, String> {
-                if (answer.trimIndent().take(1).toCharArray()[0].isLowerCase()) {
+                if (answer.isNotEmpty() && answer.trimIndent().take(1).toCharArray()[0].isLowerCase()) {
                     return true to ""
                 }
 
@@ -110,7 +110,7 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
         ) {
             override fun nextQuestion(): Question = BDAY
             override fun validate(answer: String): Pair<Boolean, String> {
-                if (answer.isAnyDigits()) {
+                if (answer.isNotEmpty() && answer.isAnyDigits()) {
                     return true to ""
                 }
 
@@ -121,7 +121,7 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
         BDAY("Когда меня создали?", listOf("2993"), "Год моего рождения должен содержать только цифры") {
             override fun nextQuestion(): Question = SERIAL
             override fun validate(answer: String): Pair<Boolean, String> {
-                if (answer.isDigitsOnly()) {
+                if (answer.isNotEmpty() && answer.isDigitsOnly()) {
                     return true to ""
                 }
 
@@ -131,7 +131,7 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
         SERIAL("Мой серийный номер?", listOf("2716057"), "Серийный номер содержит только цифры, и их 7") {
             override fun nextQuestion(): Question = IDLE
             override fun validate(answer: String): Pair<Boolean, String> {
-                if (answer.isDigitsOnly() && answer.length <= 7) {
+                if (answer.isNotEmpty() && answer.isDigitsOnly() && answer.length <= 7) {
                     return true to ""
                 }
 

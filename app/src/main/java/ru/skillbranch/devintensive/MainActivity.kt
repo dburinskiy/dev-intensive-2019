@@ -22,6 +22,7 @@ import androidx.core.content.ContextCompat.getSystemService
 import android.view.inputmethod.EditorInfo
 import ru.skillbranch.devintensive.extensions.hideKeyboard
 import ru.skillbranch.devintensive.extensions.isKeyboardOpen
+import java.lang.Exception
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
@@ -125,7 +126,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         val (r, g, b) = color
         benderImage.setColorFilter(Color.rgb(r, g, b), PorterDuff.Mode.MULTIPLY)
         textTxt.text = phrase
-
 
     }
 }
