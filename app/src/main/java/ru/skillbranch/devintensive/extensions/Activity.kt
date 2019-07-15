@@ -2,7 +2,9 @@ package ru.skillbranch.devintensive.extensions
 
 import android.app.Activity
 import android.content.Context
+import android.view.View
 import android.view.inputmethod.InputMethodManager
+import kotlinx.android.synthetic.main.activity_main.*
 
 fun Activity.hideKeyboard() {
     val view = this.currentFocus
@@ -13,6 +15,7 @@ fun Activity.hideKeyboard() {
 }
 
 fun Activity.isKeyboardOpen(): Boolean {
+    val rootView  = getWindow().getDecorView().getRootView()
     //rootView.getWindowVisibleDisplayFrame(Rect())
     return false
 }
