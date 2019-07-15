@@ -17,7 +17,7 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
     }
 
     fun listenAnswer(answer: String): Pair<String, Triple<Int, Int, Int>> {
-        if(question == Question.IDLE) {
+        if (question == Question.IDLE) {
             return "${question.question}" to status.color
         }
         var validation = question.validate(answer)
@@ -46,21 +46,6 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
 
     }
 
-
-//    Валидация
-//
-//    Question.NAME ->
-//
-//    Question.PROFESSION ->
-//
-//    Question.MATERIAL ->
-//
-//    Question.BDAY ->
-//
-//    Question.SERIAL ->
-//
-//    Question.IDLE -> //игнорировать валидацию
-
     enum class Status(val color: Triple<Int, Int, Int>) {
         NORMAL(Triple(255, 255, 255)),
         WARNING(Triple(255, 120, 0)),
@@ -76,8 +61,16 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
         }
     }
 
-    enum class Question(val question: String, val answers: List<String>, val errorMsg: String) {
-        NAME("Как меня зовут?", listOf("бендер", "bender", "Bender"), "Имя должно начинаться с заглавной буквы") {
+    enum class Question(
+        val question: String,
+        val answers: List<String>,
+        val errorMsg: String
+    ) {
+        NAME(
+            "Как меня зовут?",
+            listOf("бендер", "bender", "Bender"),
+            "Имя должно начинаться с заглавной буквы"
+        ) {
             override fun nextQuestion(): Question = PROFESSION
             override fun validate(answer: String): Pair<Boolean, String> {
                 if (answer.isNotEmpty() && answer.trimIndent().take(1).toCharArray()[0].isUpperCase()) {
@@ -118,7 +111,11 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
             }
 
         },
-        BDAY("Когда меня создали?", listOf("2993"), "Год моего рождения должен содержать только цифры") {
+        BDAY(
+            "Когда меня создали?",
+            listOf("2993"),
+            "Год моего рождения должен содержать только цифры"
+        ) {
             override fun nextQuestion(): Question = SERIAL
             override fun validate(answer: String): Pair<Boolean, String> {
                 if (answer.isNotEmpty() && answer.isDigitsOnly()) {
@@ -128,7 +125,11 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
                 return false to errorMsg
             }
         },
-        SERIAL("Мой серийный номер?", listOf("2716057"), "Серийный номер содержит только цифры, и их 7") {
+        SERIAL(
+            "Мой серийный номер?",
+            listOf("2716057"),
+            "Серийный номер содержит только цифры, и их 7"
+        ) {
             override fun nextQuestion(): Question = IDLE
             override fun validate(answer: String): Pair<Boolean, String> {
                 if (answer.isNotEmpty() && answer.isDigitsOnly() && answer.length <= 7) {
@@ -138,7 +139,11 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
                 return false to errorMsg
             }
         },
-        IDLE("На этом все, вопросов больше нет", listOf(), "") {
+        IDLE(
+            "На этом все, вопросов больше нет",
+            listOf(),
+            ""
+        ) {
             override fun nextQuestion(): Question = NAME
             override fun validate(answer: String): Pair<Boolean, String> {
                 return true to ""

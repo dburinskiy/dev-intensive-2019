@@ -1,29 +1,19 @@
 package ru.skillbranch.devintensive
 
-import android.app.Activity
-import android.content.Context
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.view.KeyEvent
-import android.view.KeyboardShortcutGroup
-import android.view.Menu
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.skillbranch.devintensive.models.Bender
-import androidx.core.content.ContextCompat.getSystemService
 import android.view.inputmethod.EditorInfo
 import ru.skillbranch.devintensive.extensions.hideKeyboard
-import ru.skillbranch.devintensive.extensions.isKeyboardOpen
-import java.lang.Exception
-
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -120,7 +110,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     fun sendMessageToBender() {
-        Log.d("M_sendMessageToBender", "ISOpened: ${isKeyboardOpen()}")
         val (phrase, color) = benderObj.listenAnswer(messageEt.text.toString())
         messageEt.setText("")
         val (r, g, b) = color

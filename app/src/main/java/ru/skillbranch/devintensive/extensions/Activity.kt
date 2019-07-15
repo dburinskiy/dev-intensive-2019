@@ -3,10 +3,7 @@ package ru.skillbranch.devintensive.extensions
 import android.app.Activity
 import android.content.Context
 import android.graphics.Rect
-import android.util.DisplayMetrics
-import android.view.View
 import android.view.inputmethod.InputMethodManager
-import kotlinx.android.synthetic.main.activity_main.*
 
 fun Activity.hideKeyboard() {
     val view = this.currentFocus
@@ -17,21 +14,16 @@ fun Activity.hideKeyboard() {
 }
 
 fun Activity.isKeyboardOpen(): Boolean {
-    val SOFT_KEYBOARD_HEIGHT_DP_THRESHOLD = 128;
-    val rootView = getWindow().getDecorView().getRootView()
-    var r:Rect = Rect();
-    rootView.getWindowVisibleDisplayFrame(r);
-    val dm:DisplayMetrics = rootView.getResources().getDisplayMetrics();
-    /* heightDiff = rootView height - status bar height (r.top) - visible frame height (r.bottom - r.top) */
-    var heightDiff = rootView.getBottom() - r.bottom;
-    /* Threshold size: dp to pixels, multiply with display density */
-    var isKeyboardShown = heightDiff > SOFT_KEYBOARD_HEIGHT_DP_THRESHOLD * dm.density;
+    val SOFT_KEYBOARD_HEIGHT_DP_THRESHOLD = 128
 
-//    Log.d(TAG, "isKeyboardShown ? " + isKeyboardShown + ", heightDiff:" + heightDiff + ", density:" + dm.density
-//            + "root view height:" + rootView.getHeight() + ", rect:" + r);
+    val rootView = window.decorView.rootView
+    var rect = Rect()
+    rootView.getWindowVisibleDisplayFrame(rect);
 
-    return isKeyboardShown;
-    //return false
+
+    return rootView.bottom - rect.bottom >
+            SOFT_KEYBOARD_HEIGHT_DP_THRESHOLD * rootView.resources.displayMetrics.density;
+
 }
 
 fun Activity.isKeyboardClosed(): Boolean {
