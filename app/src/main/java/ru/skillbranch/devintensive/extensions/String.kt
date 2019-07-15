@@ -8,3 +8,14 @@ fun String.truncate(value: Int = 16): String {
 }
 
 fun String.stripHtml(): String = this.replace("\\<[^>]*>".toRegex(), "").replace("( )+".toRegex(), " ")
+
+
+fun String.isDigitsOnly(): Boolean {
+    val len = this.length
+    for (i in 0 until len) {
+        if (!Character.isDigit(this[i])) {
+            return false
+        }
+    }
+    return true
+}
