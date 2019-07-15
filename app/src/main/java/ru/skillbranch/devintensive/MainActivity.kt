@@ -117,26 +117,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     fun sendMessageToBender() {
-        val (phrase, color) = benderObj.listenAnswer(messageEt.text.toString())
+        val (phrase, color) = benderObj.listenAnswer(messageEt.text.toString().toLowerCase())
         messageEt.setText("")
         val (r, g, b) = color
         benderImage.setColorFilter(Color.rgb(r, g, b), PorterDuff.Mode.MULTIPLY)
         textTxt.text = phrase
 
     }
-
-
-//    override fun onEditorAction(view: TextView?, actionId: Int, p2: KeyEvent?): Boolean {
-//        Log.d("M_onEditorAction", ": $actionId")
-//        if (view?.id == R.id.et_message) {
-//            if (actionId === EditorInfo.IME_ACTION_DONE) {
-//
-//                sendMessageToBender()
-//                hideKeyboard()
-//                return true
-//            }
-//        }
-//        return false
-//    }
-
 }
