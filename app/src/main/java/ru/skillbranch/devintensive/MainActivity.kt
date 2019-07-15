@@ -21,6 +21,7 @@ import ru.skillbranch.devintensive.models.Bender
 import androidx.core.content.ContextCompat.getSystemService
 import android.view.inputmethod.EditorInfo
 import ru.skillbranch.devintensive.extensions.hideKeyboard
+import ru.skillbranch.devintensive.extensions.isKeyboardOpen
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
@@ -57,6 +58,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         sendBtn.setOnClickListener(this)
 
         messageEt.setOnEditorActionListener { v: TextView, i: Int, k: KeyEvent? ->
+
             if (i === EditorInfo.IME_ACTION_DONE) {
 
                 sendMessageToBender()
@@ -117,11 +119,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     fun sendMessageToBender() {
+        Log.d("M_sendMessageToBender", "ISOpened: ${isKeyboardOpen()}")
         val (phrase, color) = benderObj.listenAnswer(messageEt.text.toString())
         messageEt.setText("")
         val (r, g, b) = color
         benderImage.setColorFilter(Color.rgb(r, g, b), PorterDuff.Mode.MULTIPLY)
         textTxt.text = phrase
+
 
     }
 }
