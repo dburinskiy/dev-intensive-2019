@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_main)
 
         //benderImage = findViewById(R.id.iv_bander) as ImageView
-        benderImage = iv_bander
+        benderImage = iv_bender
         textTxt = tv_text
         messageEt = et_message
         sendBtn = iv_send
