@@ -10,12 +10,13 @@
     <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
         <ru.skillbranch.devintensive.ui.custom.AspectRatioImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/profile_bg"
+                android:layout_height="357dp"
                 android:scaleType="centerCrop"
-                app:aspectRatio="1.78"/>
+                android:src="@drawable/profile_bg"
+                app:aspectRatio="1.78" />
 
         <RelativeLayout
                 android:layout_width="match_parent"
