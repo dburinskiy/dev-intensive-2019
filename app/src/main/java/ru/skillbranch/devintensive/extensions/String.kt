@@ -1,31 +1,10 @@
 package ru.skillbranch.devintensive.extensions
 
-fun String.truncate(value: Int = 16): String {
-
-    var result = this.trim()
-
-    return if (result.length < 3) result else "${result.substring(0, value).trim()}..."
+fun String.truncate(limit: Int = 16): String {
+	val trimmedString = this.trim()
+	if (trimmedString.length <= limit - 1) return trimmedString
+	val substr = trimmedString.substring(0 until limit).trim()
+	return "$substr..."
 }
 
-fun String.stripHtml(): String = this.replace("\\<[^>]*>".toRegex(), "").replace("( )+".toRegex(), " ")
-
-
-fun String.isDigitsOnly(): Boolean {
-    val len = this.length
-    for (i in 0 until len) {
-        if (!Character.isDigit(this[i])) {
-            return false
-        }
-    }
-    return true
-}
-
-fun String.isAnyDigits(): Boolean {
-    val len = this.length
-    for (i in 0 until len) {
-        if (Character.isDigit(this[i])) {
-            return false
-        }
-    }
-    return true
-}
+fun String.stripHtml(): String = this.replace(Regex("(<(.|\\n)+?>)|(&quot;)|(&amp;)|(&gt;)|(&lt;)"), "").replace(Regex("\\s+"), " ")
